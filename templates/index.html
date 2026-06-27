@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Safety Assistant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="hero">
+  <div class="sweep" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <p class="eyebrow">YOUR NETWORK, IN PLAIN ENGLISH</p>
+    <h1>Digital Safety Assistant</h1>
+    <p class="hero-sub">We look at what's listening on your network and tell you what it means — no jargon required.</p>
+    <div class="hero-controls">
+      <button id="scanBtn" class="scan-btn">
+        <span class="dot"></span>
+        <span class="label">Scan now</span>
+      </button>
+      <span id="lastScan" class="last-scan">Scanning your network…</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="summary-grid" id="summaryGrid" aria-live="polite">
+    <div class="card stat-card">
+      <span class="stat-label">Devices found</span>
+      <span class="stat-value" id="statDevices">—</span>
+    </div>
+    <div class="card stat-card">
+      <span class="stat-label">Open ports</span>
+      <span class="stat-value" id="statPorts">—</span>
+    </div>
+    <div class="card stat-card">
+      <span class="stat-label">High-risk ports</span>
+      <span class="stat-value" id="statHighRisk">—</span>
+    </div>
+    <div class="card stat-card risk-card" id="riskCard">
+      <span class="stat-label">Overall exposure</span>
+      <span class="stat-value" id="statRisk">—</span>
+      <div class="signal-bars" id="signalBars">
+        <span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="alerts-panel" id="alertsPanel" hidden>
+    <h2>Changes since your last scan</h2>
+    <div id="alertsList" class="alerts-list"></div>
+  </section>
+
+  <section class="devices-section">
+    <h2>Devices on your network</h2>
+    <div id="devicesList" class="devices-list">
+      <p class="empty-state">No scan results yet.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Digital Safety Assistant scans your local network only. Nothing leaves your machine.</p>
+</footer>
+
+<template id="deviceTemplate">
+  <article class="device-card">
+    <button class="device-header" type="button">
+      <div class="device-id">
+        <span class="device-name"></span>
+        <span class="device-ip"></span>
+      </div>
+      <div class="device-meta">
+        <span class="port-count"></span>
+        <svg class="chevron" width="14" height="14" viewBox="0 0 14 14"><path d="M3 5L7 9L11 5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </button>
+    <div class="device-body">
+      <div class="ports-list"></div>
+    </div>
+  </article>
+</template>
+
+<template id="portTemplate">
+  <div class="port-row">
+    <div class="port-row-head">
+      <span class="risk-pip"></span>
+      <span class="port-number"></span>
+      <span class="port-service"></span>
+      <span class="port-risk-label"></span>
+    </div>
+    <p class="port-description"></p>
+    <p class="port-advice"></p>
+    <p class="port-banner"></p>
+  </div>
+</template>
+
+<template id="alertTemplate">
+  <div class="alert-row">
+    <span class="alert-icon"></span>
+    <span class="alert-text"></span>
+  </div>
+</template>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
